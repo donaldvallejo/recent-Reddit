@@ -14,12 +14,12 @@ app.use(express.static('public'));
 require('./data/reddit-db');
 require('./controllers/posts.js')(app);
 
-app.get('/', (req, res) => {
-    res.render('home')
-});
+// app.get('/', (req, res) => {
+//     res.render('home')
+// });
 
-app.get('/posts/new', (req, res) => {
-    res.render('posts-new')
-});
+// app.get('/posts/new', (req, res) => {
+//     res.render('posts-new')
+// });
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
