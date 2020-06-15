@@ -22,7 +22,7 @@ module.exports = (app) => {
     // SAVE INSTANCE OF POST MODEL TO DB
     post.save((err, post) => {
       // REDIRECT TO THE ROOT
-      return res.redirect(`/posts2/new`);
+      return res.redirect(`/`);
     })
   });
 
