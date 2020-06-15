@@ -14,6 +14,18 @@ module.exports = (app) => {
       return res.redirect(`/`);
     })
   });
+
+  app.get("/index", (req, res) => {
+        console.log("we in bitch")
+    Post.find({})
+    .then(posts => {
+      console.log("le promise", posts)
+      res.render("/post-index.handlebars", { posts });
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
+  })
   
   app.post('/posts2/new', (req, res) => {
     // INSTANTIATE INSTANCE OF POST MODEL
@@ -25,5 +37,15 @@ module.exports = (app) => {
       return res.redirect(`/`);
     })
   });
-
+  
+  app.get("/posts/:id", function(req, res) {
+    // LOOK UP THE POST
+    Post.findById(req.params.id)
+      .then(post => {
+        res.render("posts-show", { post });
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  });
 };
