@@ -13,6 +13,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 require('./data/reddit-db');
 require('./controllers/posts.js')(app);
+require('./controllers/comments.js')(app);
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
 module.exports = app;
