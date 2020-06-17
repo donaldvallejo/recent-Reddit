@@ -45,16 +45,16 @@ module.exports = (app) => {
   });
 
   app.get("/index", (req, res) => {
-      console.log("we in bitch")
-  Post.find({}).lean()
-  .then(posts => {
-    console.log("le promise", posts)
-    res.render("post-index", { posts });
+    console.log("we in bitch")
+    Post.find({}).lean()
+    .then(posts => {
+      console.log("le promise", posts)
+      res.render("post-index", { posts });
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
   })
-  .catch(err => {
-    console.log(err.message);
-  });
-})
 
   // SUBREDDIT
   app.get("/n/:subreddit", function(req, res) {
