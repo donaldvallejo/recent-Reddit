@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = app => {
     // LOGOUT
-    app.get('/logout', (req, res) => {
+    app.get('/log-out', (req, res) => {
         res.clearCookie('nToken');
         res.redirect('/');
     });

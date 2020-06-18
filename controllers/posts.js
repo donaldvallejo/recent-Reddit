@@ -9,15 +9,16 @@ module.exports = (app) => {
   });
 
   // CREATE
-  app.post('/posts/new', (req, res) => {
-    // INSTANTIATE INSTANCE OF POST MODEL
-    const post = new Post(req.body);
+  app.post("/posts/new", (req, res) => {
+    if (req.user) {
+      var post = new Post(req.body);
 
-    // SAVE INSTANCE OF POST MODEL TO DB
-    post.save((err, post) => {
-      // REDIRECT TO THE ROOT
-      return res.redirect(`/index`);
-    })
+      post.save(function(err, post) {
+        return res.redirect(`/`);
+      });
+    } else {
+      return res.status(401); // UNAUTHORIZED
+    }
   });
   
   app.get('/posts/new', (req, res) => {
@@ -45,22 +46,21 @@ module.exports = (app) => {
   });
 
   app.get("/index", (req, res) => {
-    console.log("we in bitch")
-    Post.find({}).lean()
-    .then(posts => {
-      console.log("le promise", posts)
-      res.render("post-index", { posts });
-    })
-    .catch(err => {
-      console.log(err.message);
-    });
-  })
+    var currentUser = req.user;
+    Post.find({})
+      .then(posts => {
+        res.render("posts-index", { posts, currentUser });
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  });
 
   // SUBREDDIT
   app.get("/n/:subreddit", function(req, res) {
     Post.find({ subreddit: req.params.subreddit })
       .then(posts => {
-        res.render("post-index", { posts });
+        res.render("posts-index", { posts });
       })
       .catch(err => {
         console.log(err);
