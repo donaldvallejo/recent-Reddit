@@ -36,7 +36,7 @@ module.exports = app => {
             });
             // Set a cookie and redirect to root
             res.cookie("nToken", token, { maxAge: 900000, httpOnly: true });
-            res.redirect("/index");
+            res.redirect("/");
             });
         })
         .catch(err => {
