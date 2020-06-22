@@ -2,6 +2,7 @@ const express = require('express');
 const exphbs  = require('express-handlebars');
 const bodyParser = require('body-parser');
 const handlebars = require('handlebars');
+
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const hbs = exphbs.create({
     defaultLayout: 'main',

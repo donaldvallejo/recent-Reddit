@@ -1,30 +1,29 @@
 const Post = require('../models/post');
 const User = require('../models/user');
-const comment = new Comment(req.body);
-comment.author = req.user._id;
+const Comment = require("../models/comment")
 
 module.exports = function(app) {
-    app.post("/posts/new", (req, res) => {
-        if (req.user) {
-            var post = new Post(req.body);
-            post.author = req.user._id;
-
-            post
-                .save()
-                .then(post => {
-                    return User.findById(req.user._id);
-                })
-                .then(user => {
-                    user.posts.unshift(post);
-                    user.save();
-                    // REDIRECT TO THE NEW POST
-                    res.redirect(`/posts/${post._id}`);
-                })
-                .catch(err => {
-                    console.log(err.message);
-                });
-        } else {
-            return res.status(401); // UNAUTHORIZED
-        }
+   // CREATE Comment
+    app.post("/posts/:postId/comments", function(req, res) {
+        // INSTANTIATE INSTANCE OF MODEL
+        const comment = new Comment(req.body);
+        comment.author = req.user._id
+        console.log("Did comment show: ",comment)
+        // SAVE INSTANCE OF Comment MODEL TO DB
+        comment
+        .save()
+        .then(comment => {
+          return Post.findById(req.params.postId);
+        })
+        .then(post => {
+          post.comments.unshift(comment);
+          return post.save();
+        })
+        .then(post => {
+          res.redirect(`/posts/${req.params.postId}`);
+        })
+        .catch(err => {
+          console.log(err);
     });
+});
 };
